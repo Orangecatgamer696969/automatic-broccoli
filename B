@@ -8,7 +8,7 @@ local v127 =
     v126:CreateWindow(
     {
         ["Title"] = "goose.lua | FISCHv1.2",
-        ["SubTitle"] = "by hassanxzayn",
+        ["SubTitle"] = "by Goose77",
         ["TabWidth"] = 588 - 428,
         ["Size"] = UDim2.fromOffset(580, 280 + 180),
         ["Acrylic"] = true,
