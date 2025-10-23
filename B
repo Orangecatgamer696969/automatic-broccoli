@@ -1,12 +1,11 @@
 repeat task.wait(0.25) until game:IsLoaded()
 
 -- Configuration
-getgenv().Image = "rbxassetid://7229442422" -- button icon
+getgenv().Image = "rbxassetid://7229442422"
 getgenv().LoadedMobileUI = getgenv().LoadedMobileUI or false
 
--- Make sure this references your Fluent UI window
--- Replace `v127` with the actual variable holding your main Fluent UI window
-local FluentUIWindow = v127
+-- Reference your Fluent UI main window
+local FluentUIWindow = v127 -- replace with your actual window variable
 
 task.spawn(function()
     if not getgenv().LoadedMobileUI then
@@ -19,26 +18,29 @@ task.spawn(function()
 
         local ImageButton = Instance.new("ImageButton")
         ImageButton.Parent = OpenUI
-        ImageButton.BackgroundColor3 = Color3.fromRGB(105, 105, 105)
+        ImageButton.BackgroundColor3 = Color3.fromRGB(105,105,105)
         ImageButton.BackgroundTransparency = 0.2
-        ImageButton.Position = UDim2.new(0.9, 0, 0.1, 0)
-        ImageButton.Size = UDim2.new(0, 50, 0, 50)
+        ImageButton.Position = UDim2.new(0.9,0,0.1,0)
+        ImageButton.Size = UDim2.new(0,50,0,50)
         ImageButton.Image = getgenv().Image
         ImageButton.Draggable = true
         ImageButton.Transparency = 1
 
         local UICorner = Instance.new("UICorner")
-        UICorner.CornerRadius = UDim.new(0, 200)
+        UICorner.CornerRadius = UDim.new(0,200)
         UICorner.Parent = ImageButton
 
-        -- 🔹 Directly toggle Fluent UI on button click
+        -- 🔹 Use Fluent UI toggle method
         ImageButton.MouseButton1Click:Connect(function()
-            if FluentUIWindow then
-                FluentUIWindow.Enabled = not FluentUIWindow.Enabled
+            if FluentUIWindow and FluentUIWindow.Toggle then
+                FluentUIWindow:Toggle() -- call the built-in toggle
+            else
+                warn("Fluent UI window or Toggle method not found")
             end
         end)
     end
 end)
+
 
 
 local v126 = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
