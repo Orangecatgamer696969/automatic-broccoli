@@ -1,5 +1,62 @@
 local v126 = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
 local v127 =
+--// 🟢 DRAGGABLE TOGGLE BUTTON FOR FLUENT UI
+-- Place this after your Fluent window setup
+
+repeat task.wait(0.25) until game:IsLoaded()
+
+-- Change this to your preferred image
+local ICON = "rbxthumb://type=Asset&id=1939457199&w=150&h=150"
+
+-- This is the keybind Fluent UI uses to toggle (default: E)
+local TOGGLE_KEY = Enum.KeyCode.E
+
+-- Try to auto-detect your Fluent window
+local FluentWindow = Window or getgenv().FluentWindow
+
+task.spawn(function()
+    if getgenv().LoadedFluentToggleButton then return end
+    getgenv().LoadedFluentToggleButton = true
+
+    local CoreGui = game:GetService("CoreGui")
+    local ToggleGui = Instance.new("ScreenGui")
+    ToggleGui.Name = "FluentToggleButton"
+    ToggleGui.Parent = CoreGui
+    ToggleGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+    local Button = Instance.new("ImageButton")
+    Button.Name = "FluentToggle"
+    Button.Parent = ToggleGui
+    Button.Size = UDim2.new(0, 55, 0, 55)
+    Button.Position = UDim2.new(0.9, 0, 0.15, 0)
+    Button.BackgroundColor3 = Color3.fromRGB(105, 105, 105)
+    Button.BackgroundTransparency = 0.2
+    Button.Image = ICON
+    Button.Draggable = true
+    Button.Active = true
+
+    local Corner = Instance.new("UICorner")
+    Corner.CornerRadius = UDim.new(1, 0)
+    Corner.Parent = Button
+
+    local VirtualInputManager = game:GetService("VirtualInputManager")
+
+    Button.MouseButton1Click:Connect(function()
+        -- First, try to call Fluent's built-in Toggle function
+        if FluentWindow and type(FluentWindow.Toggle) == "function" then
+            FluentWindow:Toggle()
+            return
+        end
+
+        -- Fallback: simulate the keybind press
+        pcall(function()
+            VirtualInputManager:SendKeyEvent(true, TOGGLE_KEY, false, game)
+            task.wait(0.05)
+            VirtualInputManager:SendKeyEvent(false, TOGGLE_KEY, false, game)
+        end)
+    end)
+end)
+
     v126:CreateWindow(
     {
         ["Title"] = "goose.lua | FISCHv1.2",
