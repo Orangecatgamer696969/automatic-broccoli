@@ -1,73 +1,42 @@
-local v126 = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
-local v127 =
---// 🟢 DRAGGABLE TOGGLE BUTTON FOR FLUENT UI
--- Place this after your Fluent window setup
-
-repeat task.wait(0.25) until game:IsLoaded()
-
--- Change this to your preferred image
-local ICON = "rbxthumb://type=Asset&id=1939457199&w=150&h=150"
-
--- This is the keybind Fluent UI uses to toggle (default: E)
-local TOGGLE_KEY = Enum.KeyCode.E
-
--- Try to auto-detect your Fluent window
-local FluentWindow = Window or getgenv().FluentWindow
+repeat task.wait(0.25) until game:IsLoaded();
+getgenv().Image = "rbxassetid://7229442422"; -- put a asset id in here to make it work
+getgenv().ToggleUI = "LeftControl" -- This where you can Toggle the Fluent ui library
 
 task.spawn(function()
-    if getgenv().LoadedFluentToggleButton then return end
-    getgenv().LoadedFluentToggleButton = true
-
-    local CoreGui = game:GetService("CoreGui")
-    local ToggleGui = Instance.new("ScreenGui")
-    ToggleGui.Name = "FluentToggleButton"
-    ToggleGui.Parent = CoreGui
-    ToggleGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-
-    local Button = Instance.new("ImageButton")
-    Button.Name = "FluentToggle"
-    Button.Parent = ToggleGui
-    Button.Size = UDim2.new(0, 55, 0, 55)
-    Button.Position = UDim2.new(0.9, 0, 0.15, 0)
-    Button.BackgroundColor3 = Color3.fromRGB(105, 105, 105)
-    Button.BackgroundTransparency = 0.2
-    Button.Image = ICON
-    Button.Draggable = true
-    Button.Active = true
-
-    local Corner = Instance.new("UICorner")
-    Corner.CornerRadius = UDim.new(1, 0)
-    Corner.Parent = Button
-
-    local VirtualInputManager = game:GetService("VirtualInputManager")
-
-    Button.MouseButton1Click:Connect(function()
-        -- First, try to call Fluent's built-in Toggle function
-        if FluentWindow and type(FluentWindow.Toggle) == "function" then
-            FluentWindow:Toggle()
-            return
-        end
-
-        -- Fallback: simulate the keybind press
-        pcall(function()
-            VirtualInputManager:SendKeyEvent(true, TOGGLE_KEY, false, game)
-            task.wait(0.05)
-            VirtualInputManager:SendKeyEvent(false, TOGGLE_KEY, false, game)
+    if not getgenv().LoadedMobileUI == true then getgenv().LoadedMobileUI = true
+        local OpenUI = Instance.new("ScreenGui");
+        local ImageButton = Instance.new("ImageButton");
+        local UICorner = Instance.new("UICorner");
+        OpenUI.Name = "OpenUI";
+        OpenUI.Parent = game:GetService("CoreGui");
+        OpenUI.ZIndexBehavior = Enum.ZIndexBehavior.Sibling;
+        ImageButton.Parent = OpenUI;
+        ImageButton.BackgroundColor3 = Color3.fromRGB(105,105,105);
+        ImageButton.BackgroundTransparency = 0.8
+        ImageButton.Position = UDim2.new(0.9,0,0.1,0);
+        ImageButton.Size = UDim2.new(0,50,0,50);
+        ImageButton.Image = getgenv().Image;
+        ImageButton.Draggable = true;
+        ImageButton.Transparency = 1;
+        UICorner.CornerRadius = UDim.new(0,200);
+        UICorner.Parent = ImageButton;
+        ImageButton.MouseButton1Click:Connect(function()
+            game:GetService("VirtualInputManager"):SendKeyEvent(true,getgenv().ToggleUI,false,game);
         end)
-    end)
+    end
 end)
 
-    v126:CreateWindow(
-    {
-        ["Title"] = "goose.lua | FISCHv1.2",
-        ["SubTitle"] = "by Goose77",
-        ["TabWidth"] = 588 - 428,
-        ["Size"] = UDim2.fromOffset(580, 280 + 180),
-        ["Acrylic"] = true,
-        ["Theme"] = "Amethyst",
-        ["MinimizeKey"] = Enum.KeyCode.E
-    }
-)
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+
+local Window = Fluent:CreateWindow({
+    Title = "goose.lua" Fluent.Version,
+    SubTitle = "by goose77",
+    TabWidth = 160,
+    Size = UDim2.fromOffset(580, 460),
+    Acrylic = true, -- The blur may be detectable, setting this to false disables blur entirely
+    Theme = "Artic",
+    MinimizeKey = Enum.KeyCode.LeftControl -- Used when theres no MinimizeKeybind
+
 local v128 = {
     ["Home"] = v127:AddTab({["Title"] = "Home", ["Icon"] = "rbxassetid://7733960981"}),
     ["Main"] = v127:AddTab({["Title"] = "Main", ["Icon"] = "rbxassetid://7733749837"}),
@@ -511,7 +480,7 @@ local v131 =
 v128.Misc:AddButton(
     {["Title"] = "Anti AFK", ["Description"] = "Best For Farming", ["Callback"] = function()
             loadstring(
-                game:HttpGet("https://raw.githubusercontent.com/hassanxzayn-lua/Anti-afk/main/antiafkbyhassanxzyn")
+                game:HttpGet("https://raw.githubusercontent.com/Orangecatgamer696969/effective-octo-spoon/refs/heads/main/G")
             )()
         end}
 )
